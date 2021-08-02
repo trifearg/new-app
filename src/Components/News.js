@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Card, Container, Spinner, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { useState } from 'react';
+
 const Styles = styled.div`
 .container {
     margin: 15px auto;
@@ -43,8 +44,6 @@ export function News() {
                 }
             )
     }, [])
-
-    console.log(items);
 
     if (error) {
         return <div>Error: {error.message}</div>;
