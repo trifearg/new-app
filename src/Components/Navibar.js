@@ -21,6 +21,7 @@ export default function NaviBar() {
                     <Nav className="mr-auto">
                         <Nav.Link><Link to="/">Главная</Link></Nav.Link>
                         <Nav.Link><Link to="/news">Новости</Link></Nav.Link>
+                        <Nav.Link><Link to="/add">Добавить новость</Link></Nav.Link>
                         <Nav.Link><Link to="/perinfo">Профиль</Link></Nav.Link>
                     </Nav>
                 </Navbar>

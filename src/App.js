@@ -14,6 +14,8 @@ import { News } from './Components/News';
 import Perinfo from './Components/Perinfo';
 import PrivateRoute from './Components/PrivateRoute';
 import PublicRoute from './Components/PublicRoute'
+import AddArticle from './Components/AddArticle';
+import EditArticle from './Components/EditArticle';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/news" component={News} />
+          <Route path="/edit/:id" component={EditArticle} />
+          <Route path="/add" component={AddArticle} />
           <PrivateRoute path="/perinfo" component={Perinfo} />
         </Switch>
         <PublicRoute path="/login" component={Login} />
