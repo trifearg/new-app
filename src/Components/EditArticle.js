@@ -11,6 +11,7 @@ export default function EditArticle({match: {params}}) {
     const [url, setUrl] = useState('');
     const [urlToImage, setUrlToImage] = useState('');
 
+    useEffect(() => {
     const loadArticle = async () => {
         try {
             const resp = await services.editArticle(articleId);
@@ -23,10 +24,8 @@ export default function EditArticle({match: {params}}) {
             alert("Failed to get article.")
         }
     }
-
-    useEffect(() => {
         loadArticle();
-    }, []);
+    },[setTitle, setDescription, setUrl, setUrlToImage, articleId]);
 
     const handleSubmit = async () => {
         try {

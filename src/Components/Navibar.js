@@ -12,6 +12,11 @@ a, .navbar-brand, .navbar-nav, .nav-link {
     }
 }
 `
+
+const linkStyle = {
+    marginRight: "10px"
+}
+
 export default function NaviBar() {
     return (
         <>
@@ -19,10 +24,10 @@ export default function NaviBar() {
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                     <Navbar.Brand>LentaRuDemo</Navbar.Brand>
                     <Nav className="mr-auto">
-                        <Nav.Link><Link to="/">Главная</Link></Nav.Link>
-                        <Nav.Link><Link to="/news">Новости</Link></Nav.Link>
-                        <Nav.Link><Link to="/add">Добавить новость</Link></Nav.Link>
-                        <Nav.Link><Link to="/perinfo">Профиль</Link></Nav.Link>
+                        <Link style={linkStyle} to="/">Главная</Link>
+                        <Link style={linkStyle} to="/news">Новости</Link>
+                        <Link style={linkStyle} to="/add">Добавить новость</Link>
+                        <Link style={linkStyle} to="/perinfo">Профиль</Link>
                     </Nav>
                 </Navbar>
             </Styles>
