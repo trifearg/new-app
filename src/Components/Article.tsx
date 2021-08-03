@@ -3,7 +3,15 @@ import {Link} from 'react-router-dom'
 import { Card, Button } from 'react-bootstrap'
 import services from '../services'
 
-export default function Article({id, description, title, url, urlToImage }) {
+interface Props {
+    id: number
+    description: string
+    title: string
+    url: string
+    urlToImage: string
+}
+
+const Article: React.FC<Props> = ({id, description, title, url, urlToImage }) => {
 
     const deleteArticle = async () => {
         try {
@@ -30,3 +38,5 @@ export default function Article({id, description, title, url, urlToImage }) {
             </Card>
     )
 }
+
+export default Article;

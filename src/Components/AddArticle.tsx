@@ -3,12 +3,12 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import services from '../services';
 import { useHistory } from 'react-router';
 
-export default function AddArticle() {
+const AddArticle: React.FC = () => {
     const history = useHistory();
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [url, setUrl] = useState('');
-    const [urlToImage, setUrlToImage] = useState('');
+    const [title, setTitle] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [url, setUrl] = useState<string>('');
+    const [urlToImage, setUrlToImage] = useState<string>('');
 
     const handleSubmit = async () => {
         try {
@@ -90,3 +90,5 @@ export default function AddArticle() {
         </Container>
     )
 }
+
+export default AddArticle;

@@ -17,7 +17,7 @@ const linkStyle = {
     marginRight: "10px"
 }
 
-export default function NaviBar() {
+const NaviBar: React.FC = () => {
     return (
         <>
             <Styles>
@@ -27,10 +27,11 @@ export default function NaviBar() {
                         <Link style={linkStyle} to="/">Главная</Link>
                         <Link style={linkStyle} to="/news">Новости</Link>
                         <Link style={linkStyle} to="/add">Добавить новость</Link>
-                        <Link style={linkStyle} to="/perinfo">Профиль</Link>
                     </Nav>
                 </Navbar>
             </Styles>
         </>
     )
 }
+
+export default NaviBar;

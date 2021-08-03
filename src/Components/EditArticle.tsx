@@ -3,13 +3,17 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import services from '../services';
 import { useHistory } from 'react-router';
 
-export default function EditArticle({match: {params}}) {
+interface Params {
+    match: any
+}
+
+const EditArticle: React.FC<Params> = ({match: {params}}) => {
     const history = useHistory();
-    const articleId = params.id;
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [url, setUrl] = useState('');
-    const [urlToImage, setUrlToImage] = useState('');
+    const articleId: number = params.id;
+    const [title, setTitle] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [url, setUrl] = useState<string>('');
+    const [urlToImage, setUrlToImage] = useState<string>('');
 
     useEffect(() => {
     const loadArticle = async () => {
@@ -115,3 +119,5 @@ export default function EditArticle({match: {params}}) {
         </Container>
     )
 }
+
+export default EditArticle;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import gazeta from '../Pictures/gazeta.jpg'
+import gazeta from '../Pictures/gazeta.jpg';
 
-export const Home = () => (
+const Home: React.FC = () => (
     <>
-        <Container style={{ marginRight: '0', marginTop: '15px' }}>
-            <Row>
+        <Container>
+            <Row style={{ margin: "15px auto" }}>
                 <Col md={5}>
                     <img src={gazeta} alt="gazeta" width={450} />
                 </Col>
@@ -19,3 +19,5 @@ export const Home = () => (
         </Container>
     </>
 )
+
+export default Home;

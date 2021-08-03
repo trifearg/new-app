@@ -12,9 +12,17 @@ const Styles = styled.div`
 }
 `
 
-export function News() {
+interface articleArr {
+    id: number
+    description: string
+    title: string
+    url: string
+    urlToImage: string
+}
 
-    const [articles, setArticles] = useState([]);
+const News: React.FC = () => {
+
+    const [articles, setArticles] = useState<articleArr[]>([]);
 
     const fetchArticles = async () => { 
         try {
@@ -63,3 +71,5 @@ export function News() {
         </>
     )
 }
+
+export default News;

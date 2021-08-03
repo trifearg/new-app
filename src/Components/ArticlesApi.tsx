@@ -21,22 +21,30 @@ const spinnerStyle = {
     margin: "75px"
 };
 
-export default function ArticlesApi() {
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [items, setItems] = useState([]);
+interface Props {
+    id: number
+    description: string
+    title: string
+    url: string
+    urlToImage: string
+}
 
+const ArticlesApi: React.FC = () => {
+    const [error, setError] = useState<any>(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [items, setItems] = useState<Props[]>([]);
+    
     useEffect(() => {
         fetch("https://newsapi.org/v2/everything?language=ru&q=tesla&apiKey=a0d1bff76be44cb5b0f9716537d62bc3")
             .then(res => res.json())
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    setItems(result.articles.map(({ source, author, content, ...propertys }) => propertys)
-                        .map((item, index) => ({ ...item, id: index }))
-                        .splice(0, 8)
-                        .sort(function (a, b) {
-                            return new Date(b.publishedAt) - new Date(a.publishedAt);
+                    setItems(result.articles.map(({ source, author, content, ...propertys }: any) => propertys)
+                        .map((item: any, index: number) => ({ ...item, id: index }))
+                        .splice(0, 5)
+                        .sort(function (a: any, b: any) {
+                            return new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf();
                         }));
                 },
                 (error) => {
@@ -75,3 +83,5 @@ export default function ArticlesApi() {
         )
     }
 }
+
+export default ArticlesApi;
