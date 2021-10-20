@@ -1,38 +1,30 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import services from '../services';
-import { useHistory } from 'react-router';
+import Actions from '../actions/Actions';
+import ShowModal from './ShowModal';
 
 const AddArticle: React.FC = () => {
-    const history = useHistory();
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [url, setUrl] = useState<string>('');
     const [urlToImage, setUrlToImage] = useState<string>('');
+    const [publishedAt, setPublishedAt] = useState<string>('');
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [resultModal, setResultModal] = useState<string>('');
 
     const handleSubmit = async () => {
-        try {
-            if (!title || !description || !url || !urlToImage) {
-                alert('Data is required!');
-                return;
-            }
-            const article = {
-                title,
-                description,
-                url,
-                urlToImage
-            };
-            await services.addArticle(article);
-            alert('Article added successefully!');
-            history.replace('/news');
-        } catch(error) {
-            console.log(error);
-            alert('Add article failed!')
-        }
+        const result = await Actions.AddArticle({ title, description, url, urlToImage, publishedAt }) || '';
+        setIsOpen(!isOpen);
+        setResultModal(result);
+    }
+
+    const closeModal = () => {
+        setIsOpen(!isOpen);
     }
 
     return (
         <Container style={{ padding: "15px" }}>
+            <ShowModal isOpen={isOpen} resultModal={resultModal} closeModal={closeModal} />
             <Row>
                 <Col>
                     <Form>
@@ -43,7 +35,6 @@ const AddArticle: React.FC = () => {
                                 placeholder="Enter title"
                                 onChange={e => setTitle(e.target.value)}
                                 value={title}
-                                
                             />
                         </Form.Group>
                         <Form.Group>
@@ -53,7 +44,6 @@ const AddArticle: React.FC = () => {
                                 placeholder="Enter description"
                                 onChange={e => setDescription(e.target.value)}
                                 value={description}
-                                
                             />
                         </Form.Group>
                         <Form.Group>
@@ -63,7 +53,6 @@ const AddArticle: React.FC = () => {
                                 placeholder="Enter url"
                                 onChange={e => setUrl(e.target.value)}
                                 value={url}
-                                
                             />
                         </Form.Group>
                         <Form.Group>
@@ -73,7 +62,15 @@ const AddArticle: React.FC = () => {
                                 placeholder="Enter urlToImage"
                                 onChange={e => setUrlToImage(e.target.value)}
                                 value={urlToImage}
-                                
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Дата публикации</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="YYYY-MM-DDTHH:MM:SSZ"
+                                onChange={e => setPublishedAt(e.target.value)}
+                                value={publishedAt}
                             />
                         </Form.Group>
                         <Form.Group>

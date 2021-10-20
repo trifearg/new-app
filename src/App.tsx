@@ -8,7 +8,7 @@ import {
   Route
 } from "react-router-dom"
 
-import Home  from './Components/Home';
+import Home from './Components/Home';
 import News from './Components/News';
 import AddArticle from './Components/AddArticle';
 import EditArticle from './Components/EditArticle';

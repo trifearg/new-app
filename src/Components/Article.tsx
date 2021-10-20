@@ -1,41 +1,27 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Card, Button } from 'react-bootstrap'
-import services from '../services'
+import { IArticles } from '../interfaces/IArticles'
 
-interface Props {
-    id: number
-    description: string
-    title: string
-    url: string
-    urlToImage: string
-}
-
-const Article: React.FC<Props> = ({id, description, title, url, urlToImage }) => {
-
-    const deleteArticle = async () => {
-        try {
-            await services.deleteArticle(id);
-            alert('Article deleted');
-            window.location.reload();
-        } catch(error) {
-            console.log(error);
-            alert('Delete article failed');
-        }
-    }
+const Article: React.FC<IArticles> = ({ id, description, title, url, urlToImage, author, publishedAt, handleClick}) => {
     return (
-            <Card style={{marginTop: "10px", width: "300px"}}>
+        <>
+            <Card style={{ marginTop: "10px", width: "300px" }}>
                 <Card.Img variant="top" src={urlToImage} />
                 <Card.Body>
                     <Card.Title>{title}</Card.Title>
                     <Card.Text>{description}</Card.Text>
-                    <Link to={`/edit/${id}`}><Button variant="outline-secondary">Изменить</Button></Link>
-                    <Button variant="outline-danger" style={{marginLeft: "5px"}} onClick={deleteArticle}>Удалить</Button>
+                    <Link to={`/edit/${id}`}><Button style={author ? { display: 'none' } : {}} variant="outline-secondary">Изменить</Button></Link>
+                    <Button variant="outline-danger" style={author ? { display: 'none' } : { marginLeft: "5px" }} onClick={() => handleClick(id)}>Удалить</Button>
                 </Card.Body>
                 <Card.Footer>
-                    <a rel="noopener noreferrer" href={url} target="_blank">{url}</a>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <a rel="noopener noreferrer" href={url} target="_blank">{url}</a>
+                        Дата публикации: {publishedAt}
+                    </div>
                 </Card.Footer>
             </Card>
+        </>
     )
 }
 

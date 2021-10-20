@@ -1,67 +1,44 @@
 import React, { useState, useEffect } from 'react';
+import { RouteComponentProps, useParams } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import services from '../services';
-import { useHistory } from 'react-router';
+import Actions from '../actions/Actions'
+import ShowModal from '../Components/ShowModal'
 
-interface Params {
-    match: any
-}
-
-const EditArticle: React.FC<Params> = ({match: {params}}) => {
-    const history = useHistory();
-    const articleId: number = params.id;
+const EditArticle: React.FC<RouteComponentProps> = () => {
+    const { id } = useParams<{ id: string }>();
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [url, setUrl] = useState<string>('');
     const [urlToImage, setUrlToImage] = useState<string>('');
+    const [publishedAt, setPublishedAt] = useState<string>('');
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [resultModal, setResultModal] = useState<string>('');
 
     useEffect(() => {
-    const loadArticle = async () => {
-        try {
-            const resp = await services.editArticle(articleId);
-            const article = resp.data;
-            setTitle(article.title);
-            setDescription(article.description);
-            setUrl(article.url);
-            setUrlToImage(article.urlToImage);
-        } catch(error) {
-            alert("Failed to get article.")
+        const loadArticle = async () => {
+            const loadData = await Actions.LoadArticle(id);
+            setTitle(loadData.title)
+            setDescription(loadData.description)
+            setUrl(loadData.url)
+            setUrlToImage(loadData.urlToImage)
+            setPublishedAt(loadData.publishedAt)
         }
-    }
         loadArticle();
-    },[setTitle, setDescription, setUrl, setUrlToImage, articleId]);
+    }, [setTitle, setDescription, setUrl, setUrlToImage, id]);
 
     const handleSubmit = async () => {
-        try {
-            if (!title || !description || !url || !urlToImage) {
-                alert('Data is required!');
-                return;
-            }
-            const article = {
-                title,
-                description,
-                url,
-                urlToImage
-            };
-            await services.updateArticle(article, articleId);
-            alert('Article updated successefully!');    
-            history.replace('/news');
-        } catch(error) {
-            // console.log(error);
-            alert('Update article failed!')
-        }
+        const result = await Actions.UpdateArticle({ title, description, url, urlToImage, publishedAt }, id) || ''
+        setIsOpen(!isOpen)
+        setResultModal(result)
     }
 
-    if (!title || !description || !url || !urlToImage) {
-        <Container>
-        <Row xs="4">
-            <p>Loading article...</p>
-        </Row>
-    </Container>
-    } 
+    const closeModal =  () => {
+        setIsOpen(!isOpen)
+    }
 
     return (
         <Container style={{ padding: "15px" }}>
+            <ShowModal isOpen={isOpen} resultModal={resultModal} closeModal={closeModal}/>
             <Row>
                 <Col>
                     <Form>
@@ -72,7 +49,7 @@ const EditArticle: React.FC<Params> = ({match: {params}}) => {
                                 placeholder="Enter title"
                                 onChange={e => setTitle(e.target.value)}
                                 value={title}
-                                
+
                             />
                         </Form.Group>
                         <Form.Group>
@@ -82,7 +59,7 @@ const EditArticle: React.FC<Params> = ({match: {params}}) => {
                                 placeholder="Enter description"
                                 onChange={e => setDescription(e.target.value)}
                                 value={description}
-                                
+
                             />
                         </Form.Group>
                         <Form.Group>
@@ -92,7 +69,7 @@ const EditArticle: React.FC<Params> = ({match: {params}}) => {
                                 placeholder="Enter url"
                                 onChange={e => setUrl(e.target.value)}
                                 value={url}
-                                
+
                             />
                         </Form.Group>
                         <Form.Group>
@@ -102,7 +79,17 @@ const EditArticle: React.FC<Params> = ({match: {params}}) => {
                                 placeholder="Enter urlToImage"
                                 onChange={e => setUrlToImage(e.target.value)}
                                 value={urlToImage}
-                                
+
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Дата публикации</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="YYYY-MM-DDTHH-MM-SSZ"
+                                onChange={e => setPublishedAt(e.target.value)}
+                                value={publishedAt}
+
                             />
                         </Form.Group>
                         <Form.Group>
