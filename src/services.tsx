@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_BACKEND_URL: string = 'http://localhost:3000';
+const BASE_BACKEND_URL: string = 'https://localhost:3000';
 
 const service = {
     getAllArticles: () => axios.get(`${BASE_BACKEND_URL}/articles`),
